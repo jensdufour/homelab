@@ -1,0 +1,31 @@
+# Ignore Proxmox container files
+*.qcow2
+*.raw
+*.vmdk
+*.vdi
+*.iso
+*.img
+*.ova
+*.ovf
+*.log
+*.tmp
+
+# Ignore backup files
+*.bak
+*.backup
+*.tar.gz
+*.zip
+
+# Ignore configuration files
+*.conf
+*.cfg
+*.ini
+
+# Ignore temporary files
+*.swp
+*.swo
+*.tmp
+*.temp
+
+# Ignore environment files
+.env

@@ -1,0 +1,41 @@
+---
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+      - VERSION=docker
+      - PLEX_CLAIM=
+    volumes:
+      - /docker/plex:/config
+      - /data:/data
+    restart: unless-stopped
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+    volumes:
+      - /docker/tautulli:/config
+    ports:
+      - 8181:8181
+    restart: unless-stopped
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+    volumes:
+      - /docker/overseerr:/config
+      - /data:/data
+    ports:
+      - 5055:5055
+    restart: unless-stopped
