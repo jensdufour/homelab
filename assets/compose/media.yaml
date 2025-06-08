@@ -1,0 +1,127 @@
+---
+services:
+  qbittorrent:
+    container_name: qbittorrent
+    image: ghcr.io/hotio/qbittorrent
+    ports:
+      - "8080:8080"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Brussels
+      - WEBUI_PORTS=8080/tcp,8080/udp
+      - VPN_ENABLED=true #
+      - VPN_CONF=wg0 #
+      - VPN_PROVIDER=generic #
+      - VPN_LAN_NETWORK=192.168.0.0/24 #
+      - VPN_LAN_LEAK_ENABLED=false #
+      - VPN_EXPOSE_PORTS_ON_LAN= #
+      - VPN_AUTO_PORT_FORWARD=false #
+      - VPN_AUTO_PORT_FORWARD_TO_PORTS= #
+      - VPN_FIREWALL_TYPE=auto #
+      - VPN_NAMESERVERS=1.1.1.1,1.0.0.1 #
+      - PRIVOXY_ENABLED=false #
+      - UNBOUND_ENABLED=false #
+      - UNBOUND_NAMESERVERS #
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1 #
+      - net.ipv6.conf.all.disable_ipv6=1 #
+    devices:
+      - /dev/net/tun:/dev/net/tun # OPTIONAL
+    volumes:
+      - /docker/qbittorrent:/config
+      - /data:/data
+    restart: unless-stopped
+  nzbget:
+    container_name: nzbget
+    image: ghcr.io/hotio/nzbget
+    ports:
+      - "6789:6789"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Brussels
+    volumes:
+      - /docker/nzbget:/config
+      - /data:/data
+  prowlarr:
+    container_name: prowlarr
+    image: ghcr.io/hotio/prowlarr
+    ports:
+      - "9696:9696"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Brussels
+    volumes:
+      - /docker/prowlarr:/config
+  sonarr:
+    container_name: sonarr
+    image: ghcr.io/hotio/sonarr
+    ports:
+      - "8989:8989"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Brussels
+    volumes:
+      - /docker/sonarr:/config
+      - /data:/data
+  radarr:
+    container_name: radarr
+    image: ghcr.io/hotio/radarr
+    ports:
+      - "7878:7878"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Brussels
+    volumes:
+      - /docker/radarr:/config
+      - /data:/data
+  bazarr:
+    container_name: bazarr
+    image: ghcr.io/hotio/bazarr
+    ports:
+      - "6767:6767"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Brussels
+      - WEBUI_PORTS=6767/tcp,6767/udp
+    volumes:
+      - /docker/bazarr:/config
+      - /data:/data
+  jellyfin:
+    container_name: jellyfin
+    image: ghcr.io/hotio/jellyfin
+    ports:
+      - "8096:8096"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Brussels
+    volumes:
+      - /docker/jellyfin:/config
+      - /data:/data
+  jellyseerr:
+    container_name: jellyseerr
+    image: ghcr.io/hotio/jellyseerr
+    ports:
+      - "5055:5055"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Brussels
+    volumes:
+      - /docker/jellyseerr:/config
