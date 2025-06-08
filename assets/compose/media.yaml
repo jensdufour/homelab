@@ -1,5 +1,10 @@
 ---
 services:
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   qbittorrent:
     container_name: qbittorrent
     image: ghcr.io/hotio/qbittorrent
